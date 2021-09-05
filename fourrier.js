@@ -5,7 +5,7 @@ let isChangeColorsEnabled = false;
 const sliderMaxValue = 100;
 const sliderDefaultValue = 1;
 
-const canvasWidth = 1900;
+const canvasWidth = window.innerWidth;
 const canvasHeight = 500;
 
 let slider;
@@ -28,7 +28,7 @@ const preset = {
 		},
 		min: 1,
 		functionFourrier: (nCircle) => {
-			return 300 * (1 / (nCircle * PI));
+			return 300 * (-1 / (nCircle * PI));
 		},
 	},
 	square: {
@@ -40,7 +40,7 @@ const preset = {
 			return 75 * (4 / (nCircle * PI));
 		},
 	},
-	triangule: {
+	triangle: {
 		n: (i) => {
 			return i * 2 + 1;
 		},
@@ -81,14 +81,12 @@ function createUI() {
 	functionSelector = createSelect();
 	functionSelector.option("square");
 	functionSelector.option("sawtooth");
-	functionSelector.option("triangule");
+	functionSelector.option("triangle");
 	currentPreset = functionSelector.value();
 
 	functionSelector.changed((e) => {
 		currentPreset = functionSelector.value();
 	});
-
-	// sliderSpeed = createSlider(0.01, 0.1, 0.05, 0.01);
 }
 
 function createSliderElement() {
@@ -151,13 +149,13 @@ function draw() {
 	line(x - 200, y, 0, wave[0]);
 	beginShape();
 	noFill();
+
 	for (let i = 0; i < wave.length; i++) {
 		changeColors(minValue, maxValue, wave[i]);
 		vertex(i, wave[i]);
 	}
 	endShape();
 
-	// time += sliderSpeed.value();
 	time += 0.05;
 
 	if (wave.length > canvasWidth) {
