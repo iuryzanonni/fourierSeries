@@ -9,7 +9,7 @@ select {
 	background-color: #252732;
 	color: white;
 	font-size: .8em;
-	margin-left: 40px;
+	/* margin-left: 40px; */
 	text-align: center;
 	border-radius: 12px;
 }
@@ -20,7 +20,7 @@ input[type="text"] {
 	background-color: #252732;
 	color: white;
 	font-size: .8em;
-	margin-left: 20px;
+	/* margin-left: 40px; */
 	text-align: center;
 	border-radius: 12px;
 	border: 1px solid rgb(118, 118, 118)
@@ -31,7 +31,7 @@ select,input[type="text"]:focus {
 }
 
 input[type="range"] {
-	margin-left:20px;
+	/* margin-left:20px; */
 }
 
 .timeIncTextbox{
