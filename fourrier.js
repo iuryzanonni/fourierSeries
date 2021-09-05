@@ -5,6 +5,9 @@ let isChangeColorsEnabled = false;
 const sliderMaxValue = 100;
 const sliderDefaultValue = 1;
 
+let timeInc = 0.05;
+let timeIncMaxValue = 10;
+
 const canvasWidth = window.innerWidth;
 const canvasHeight = 500;
 
@@ -67,10 +70,39 @@ function generateColors() {
 }
 
 function createUI() {
+	createSelectorElement();
+	createSliderElement();
+	createTimeIncElement();
+
+}
+
+function createSliderElement() {
+	let sliderContainer = createDiv("Iteração: ");
+
+	slider = createSlider(1, sliderMaxValue, sliderDefaultValue);
+	slider.input(
+		(updateTextbox = () => {
+			sliderTextbox.value(slider.value());
+		})
+	);
 	sliderTextbox = createInput("");
 	sliderTextbox.size(50);
+	sliderTextbox.value(slider.value());
+	sliderTextbox.input(
+		(updateSlider = () => {
+			if (sliderTextbox.value() > sliderMaxValue) {
+				sliderTextbox.value(sliderMaxValue);
+			}
+			slider.value(sliderTextbox.value());
+		})
+	);
+	sliderTextbox.parent(sliderContainer);
+	slider.parent(sliderContainer);
 
-	createSliderElement();
+}
+
+function createSelectorElement() {
+	let selectorContainer = createDiv("Função: ");
 
 	functionSelector = createSelect();
 	functionSelector.option("square");
@@ -81,16 +113,39 @@ function createUI() {
 	functionSelector.changed((e) => {
 		currentPreset = functionSelector.value();
 	});
+
+	functionSelector.parent(selectorContainer);
 }
 
-function createSliderElement() {
-	slider = createSlider(1, sliderMaxValue, sliderDefaultValue);
-	sliderTextbox.value(slider.value());
-	slider.input(
-		(updateTextbox = () => {
-			sliderTextbox.value(slider.value());
+function createTimeIncElement() {
+	let timeContainer = createDiv("Frequência: ");
+
+	timeIncSlider = createSlider(1, timeIncMaxValue, timeInc * 100);
+	timeIncSlider.input(
+		(updateTimeInc = () => {
+			timeInc = timeIncSlider.value() / 100;
+			timeIncTextbox.value(timeInc);
 		})
 	);
+
+	timeIncTextbox = createInput("");
+	timeIncTextbox.attribute("readonly",true);
+	timeIncTextbox.size(50);
+	timeIncTextbox.style("border:none");
+	timeIncTextbox.value(timeIncSlider.value()/100);
+	timeIncTextbox.input(
+		(updateSlider = () => {
+			if (timeIncTextbox.value() > timeIncMaxValue) {
+				timeIncTextbox.value(timeIncMaxValue/100);
+			}
+			timeIncSlider.value(timeIncTextbox.value()*100);
+		})
+	);
+	timeIncTextbox.parent(timeContainer);
+	timeIncSlider.parent(timeContainer);
+	// timeIncTextbox.value(slider.value());
+
+
 }
 
 function changeColors(min, max, value) {
@@ -159,7 +214,7 @@ function draw() {
 	}
 	endShape();
 
-	time += 0.05;
+	time += timeInc;
 
 	if (wave.length > canvasWidth) {
 		wave.pop();
