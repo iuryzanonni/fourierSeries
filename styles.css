@@ -1,0 +1,34 @@
+/*set page background color #282a36 */
+body {
+	background-color: #282a36;
+}
+
+select {
+	display: inline-block;
+	padding: 10px;
+	background-color: #252732;
+	color: white;
+	font-size: 1.4em;
+	margin-left: 20px;
+	text-align: center;
+	border-radius: 12px;
+}
+
+input[type="text"] {
+	display: inline-block;
+	padding: 10px;
+	background-color: #252732;
+	color: white;
+	font-size: 1.4em;
+	text-align: center;
+	border-radius: 12px;
+	border: 1px solid rgb(118, 118, 118)
+}
+
+select,input[type="text"]:focus {
+	outline: none;
+}
+
+input[type="range"] {
+	margin-left:20px;
+}

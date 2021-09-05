@@ -13,12 +13,6 @@ let sliderSpeed;
 let sliderTextbox;
 let functionSelector;
 
-function setup() {
-	createCanvas(canvasWidth, canvasHeight);
-	createUI();
-	generateColors();
-}
-
 let currentPreset;
 
 const preset = {
@@ -107,9 +101,18 @@ function changeColors(min, max, value) {
 	}
 }
 
+function setup() {
+	createCanvas(canvasWidth, canvasHeight);
+	createUI();
+	generateColors();
+	strokeWeight(1.5);
+}
+
 function draw() {
 	colorMode(RGB);
-	background(0);
+	clear();
+	background(0, 15);
+	// background("#282a36");
 	translate(200, 200); //old 150,200
 
 	let x = 0;
@@ -123,9 +126,9 @@ function draw() {
 		let prevx = x;
 		let prevy = y;
 
-		let nCircle = i * 2 + 1;
+		// let nCircle = i * 2 + 1;
 		let n = preset[currentPreset].n(i);
-		let radius = preset[currentPreset].functionFourrier(nCircle);
+		let radius = preset[currentPreset].functionFourrier(n);
 		x += radius * cos(n * time);
 		y += radius * sin(n * time);
 
